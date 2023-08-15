@@ -1,0 +1,68 @@
+server:
+    port: 8080
+spring:
+    application:
+        name: message-service
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/message
+        username: root
+        password: admin
+        hikari:
+            connection-timeout: 30000
+            idle-timeout: 600000
+            max-lifetime: 1800000
+            maximum-pool-size: 10
+            minimum-idle: 10
+            connection-init-sql: select 1
+    jpa:
+        properties:
+            hibernate:
+                format_sql: true
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
+        database: postgresql
+    data:
+        mongodb:
+            host: localhost
+            port: 27017
+            database: message
+            username: test-user
+            password: test-password
+            auto-index-creation: true
+        redis:
+          host: localhost
+          port: 6379
+          lettuce:
+              pool:
+                  min-idle: 0
+                  max-idle: 8
+                  max-wait: -1ms
+                  max-active: 8
+    rabbitmq:
+        host: localhost
+        port: 5672
+    activemq:
+        user: guest
+        password: guest
+
+logging:
+    file:
+        name: ./log/${spring.application.name}.log
+
+management:
+    server:
+        port: 7001
+        address: localhost
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api/docs
+    swagger-ui:
+        path: /api/swagger-ui.html
