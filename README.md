@@ -10,7 +10,7 @@ User service: register, user profile
 	```shell
 	./gradlew spotlessApply
 	```
- 
+
 ### Swagger
 1. Generate swagger.json in build/docs
 	```shell
