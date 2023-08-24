@@ -8,9 +8,9 @@ import io.swagger.v3.oas.annotations.info.License;
 @OpenAPIDefinition(
         info =
                 @Info(
-                        title = "WhyTalk Message API",
+                        title = "WhyTalk User API",
                         version = "v1.0",
-                        description = "Message Service, Chat Room Service",
+                        description = "User Service, User Profile Service",
                         contact =
                                 @Contact(
                                         name = "WiseDeveloperLife Inc.",

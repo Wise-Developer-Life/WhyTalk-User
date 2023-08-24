@@ -1,5 +1,6 @@
 package com.wisedevlife.whytalkuser.entity;
 
+import com.wisedevlife.whytalkuser.common.enums.OAuthSource;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,10 @@ public class User {
     private String email;
 
     private String password;
+
+    @Column(name = "oauth_source")
+    @Enumerated(EnumType.STRING)
+    private OAuthSource oAuthSource;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
