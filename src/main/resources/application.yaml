@@ -2,10 +2,10 @@ server:
     port: 8080
 spring:
     application:
-        name: message-service
+        name: user-service
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/message
+        url: jdbc:postgresql://localhost:5432/user
         username: root
         password: admin
         hikari:
@@ -23,34 +23,9 @@ spring:
             ddl-auto: create-drop
         show-sql: true
         database: postgresql
-    data:
-        mongodb:
-            host: localhost
-            port: 27017
-            database: message
-            username: test-user
-            password: test-password
-            auto-index-creation: true
-        redis:
-          host: localhost
-          port: 6379
-          lettuce:
-              pool:
-                  min-idle: 0
-                  max-idle: 8
-                  max-wait: -1ms
-                  max-active: 8
-    rabbitmq:
-        host: localhost
-        port: 5672
-    activemq:
-        user: guest
-        password: guest
-
 logging:
     file:
         name: ./log/${spring.application.name}.log
-
 management:
     server:
         port: 7001
@@ -59,7 +34,6 @@ management:
         web:
             exposure:
                 include: '*'
-
 springdoc:
     api-docs:
         enabled: true
