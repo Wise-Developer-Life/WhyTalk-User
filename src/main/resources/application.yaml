@@ -2,10 +2,10 @@ server:
     port: 8080
 spring:
     application:
-        name: user-service
+        name: whytalk-user
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/user
+        url: jdbc:postgresql://localhost:5433/user
         username: root
         password: admin
         hikari:

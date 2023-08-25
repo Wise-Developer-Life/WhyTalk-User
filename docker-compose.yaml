@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   user-database:
     container_name: user-postgres
@@ -8,6 +9,6 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: user
     ports:
-      - 5432:5432
+      - "5433:5432"
     volumes:
       - ./storage/postgres-data:/var/lib/postgresql/data
