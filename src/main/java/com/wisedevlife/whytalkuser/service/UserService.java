@@ -6,7 +6,7 @@ import com.wisedevlife.whytalkuser.entity.User;
 public interface UserService {
     User createUser(CreateUserRequest createUserRequest);
 
-    User getUserWithUserId(final String userId);
+    User getUserWithUserId(Long userId);
 
-    User deleteUser(final String userId);
+    void deleteUser(Long userId);
 }

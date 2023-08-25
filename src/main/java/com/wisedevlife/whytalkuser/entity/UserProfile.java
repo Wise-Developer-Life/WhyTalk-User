@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String displayName;
 

@@ -19,11 +19,21 @@
       "description": "Generated server url"
     }
   ],
+  "tags": [
+    {
+      "name": "User API",
+      "description": "Register, delete users"
+    },
+    {
+      "name": "User Profile API",
+      "description": "Get, update user profile"
+    }
+  ],
   "paths": {
     "/user_profile/{userId}": {
       "get": {
         "tags": [
-          "user-profile-controller"
+          "User Profile API"
         ],
         "summary": "Get user profile with userId",
         "operationId": "getUserProfile",
@@ -33,7 +43,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -52,7 +63,7 @@
       },
       "put": {
         "tags": [
-          "user-profile-controller"
+          "User Profile API"
         ],
         "summary": "Update user profile with userId",
         "operationId": "updateUserProfile",
@@ -62,10 +73,21 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -83,10 +105,20 @@
     "/user/register": {
       "post": {
         "tags": [
-          "user-controller"
+          "User API"
         ],
         "summary": "Register new user with username/password",
         "operationId": "registerNewUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -104,7 +136,7 @@
     "/user/{userId}": {
       "delete": {
         "tags": [
-          "user-controller"
+          "User API"
         ],
         "summary": "Delete user with userId",
         "operationId": "deleteUser",
@@ -114,7 +146,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -124,7 +157,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReturnResponseUserResponse"
+                  "$ref": "#/components/schemas/ReturnResponseVoid"
                 }
               }
             }
@@ -135,6 +168,20 @@
   },
   "components": {
     "schemas": {
+      "UpdateUserProfileRequest": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "example": "example_display_name"
+          },
+          "bio": {
+            "type": "string",
+            "example": "example_bio"
+          }
+        },
+        "description": "Update User Profile Request"
+      },
       "ReturnResponseUserProfileResponse": {
         "type": "object",
         "properties": {
@@ -161,7 +208,8 @@
         "type": "object",
         "properties": {
           "userId": {
-            "type": "string"
+            "type": "integer",
+            "format": "int64"
           },
           "displayName": {
             "type": "string"
@@ -170,6 +218,38 @@
             "type": "string"
           }
         }
+      },
+      "CreateUserRequest": {
+        "required": [
+          "email",
+          "sex",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "example_user"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "example_password"
+          },
+          "sex": {
+            "type": "string",
+            "example": "MALE",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          }
+        },
+        "description": "Create User Request"
       },
       "ReturnResponseUserResponse": {
         "type": "object",
@@ -197,10 +277,33 @@
         "type": "object",
         "properties": {
           "userId": {
-            "type": "string"
+            "type": "integer",
+            "format": "int64"
           },
           "username": {
             "type": "string"
+          }
+        }
+      },
+      "ReturnResponseVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "object"
+          },
+          "time": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       }
