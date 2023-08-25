@@ -1,6 +1,7 @@
 package com.wisedevlife.whytalkuser.controller;
 
 import com.wisedevlife.whytalkuser.common.helper.ResponseHandler;
+import com.wisedevlife.whytalkuser.dto.request.BasicAuthRequest;
 import com.wisedevlife.whytalkuser.dto.request.CreateUserRequest;
 import com.wisedevlife.whytalkuser.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkuser.dto.response.UserResponse;
@@ -28,6 +29,21 @@ public class UserController {
         User registeredUser = userService.createUser(createUserRequest);
         UserResponse response = modelMapper.map(registeredUser, UserResponse.class);
         return ResponseHandler.success(response);
+    }
+
+    @Operation(summary = "Get user with userId")
+    @GetMapping("/{userId}")
+    ResponseEntity<ReturnResponse<UserResponse>> getUser(@PathVariable Long userId) {
+        User user = userService.getUserWithUserId(userId);
+        UserResponse response = modelMapper.map(user, UserResponse.class);
+        return ResponseHandler.success(response);
+    }
+
+    @Operation(summary = "Check if username and password match")
+    @PostMapping("/match")
+    ResponseEntity<ReturnResponse<Boolean>> matchUsernamePassword(@RequestBody BasicAuthRequest authRequest) {
+        Boolean isAuthSuccess = userService.matchUsernamePassword(authRequest.username(), authRequest.password());
+        return ResponseHandler.success(isAuthSuccess);
     }
 
     @Operation(summary = "Delete user with userId")

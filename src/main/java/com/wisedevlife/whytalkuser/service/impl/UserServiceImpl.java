@@ -9,13 +9,17 @@ import com.wisedevlife.whytalkuser.repository.UserRepository;
 import com.wisedevlife.whytalkuser.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Primary
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     @Override
@@ -28,13 +32,13 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistedException("email", createUserRequest.email());
         }
 
-        // hash password
+        String hashedPassword = passwordEncoder.encode(createUserRequest.password());
         UserProfile userProfile = UserProfile.builder().sex(createUserRequest.sex()).build();
         User createdUser =
                 User.builder()
                         .userProfile(userProfile)
                         .username(createUserRequest.username())
-                        .password(createUserRequest.password())
+                        .password(hashedPassword)
                         .email(createUserRequest.email())
                         .build();
 
@@ -48,6 +52,11 @@ public class UserServiceImpl implements UserService {
                         .findById(userId)
                         .orElseThrow(() -> new UserNotFoundException("userId", userId));
         return user;
+    }
+
+    @Override
+    public Boolean matchUsernamePassword(String username, String password) {
+        return userRepository.findByUsername(username).filter(user -> passwordEncoder.matches(password, user.getPassword())).isPresent();
     }
 
     @Override

@@ -8,5 +8,7 @@ public interface UserService {
 
     User getUserWithUserId(Long userId);
 
+    Boolean matchUsernamePassword(String username, String password);
+
     void deleteUser(Long userId);
 }

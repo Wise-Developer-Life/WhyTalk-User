@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "http://localhost:8081",
       "description": "Generated server url"
     }
   ],
@@ -133,7 +133,68 @@
         }
       }
     },
+    "/user/match": {
+      "post": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Check if username and password match",
+        "operationId": "matchUsernamePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BasicAuthRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnResponseBoolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/{userId}": {
+      "get": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Get user with userId",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "User API"
@@ -282,6 +343,48 @@
           },
           "username": {
             "type": "string"
+          }
+        }
+      },
+      "BasicAuthRequest": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Username",
+            "example": "example_user"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password",
+            "example": "example_password"
+          }
+        },
+        "description": "Basic Auth Request"
+      },
+      "ReturnResponseBoolean": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "boolean"
+          },
+          "time": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
