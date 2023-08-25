@@ -41,6 +41,7 @@ ext {
 	caffeineVersion = '3.1.5'
 	prometheusVersion = '1.11.1'
 	springDocVersion = '2.2.0'
+	modelMapperVersion = '3.0.0'
 }
 
 openApi {
@@ -58,6 +59,7 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
 	implementation "com.github.ben-manes.caffeine:caffeine:${caffeineVersion}"
 	implementation "org.projectlombok:lombok:${lombokVersion}"
+	implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 
 	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 

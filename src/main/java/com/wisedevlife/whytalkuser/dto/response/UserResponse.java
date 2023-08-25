@@ -1,3 +1,9 @@
 package com.wisedevlife.whytalkuser.dto.response;
 
-public record UserResponse(String userId, String username) {}
+import lombok.Data;
+
+@Data
+public class UserResponse {
+    private Long userId;
+    private String username;
+}
