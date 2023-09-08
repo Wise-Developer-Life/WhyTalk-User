@@ -1,6 +1,7 @@
 package com.wisedevlife.whytalkuser.controller;
 
 import com.wisedevlife.whytalkuser.common.helper.ResponseHandler;
+import com.wisedevlife.whytalkuser.dto.request.CreateProfileRequest;
 import com.wisedevlife.whytalkuser.dto.request.UpdateUserProfileRequest;
 import com.wisedevlife.whytalkuser.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkuser.dto.response.UserProfileResponse;
@@ -22,10 +23,20 @@ public class UserProfileController {
     private final ModelMapper modelMapper;
     private final UserProfileService userProfileService;
 
+    @Operation(summary = "Create user profile with userId")
+    @PostMapping("/{userId}")
+    public ResponseEntity<ReturnResponse<UserProfileResponse>> createUserProfile(
+            @PathVariable String userId, @RequestBody CreateProfileRequest createProfileRequest) {
+        UserProfile userProfile =
+                userProfileService.createUserProfile(userId, createProfileRequest);
+        UserProfileResponse response = modelMapper.map(userProfile, UserProfileResponse.class);
+        return ResponseHandler.success(response);
+    }
+
     @Operation(summary = "Get user profile with userId")
     @GetMapping("/{userId}")
     public ResponseEntity<ReturnResponse<UserProfileResponse>> getUserProfile(
-            @PathVariable Long userId) {
+            @PathVariable String userId) {
         UserProfile userProfile = userProfileService.getUserProfile(userId);
         UserProfileResponse response = modelMapper.map(userProfile, UserProfileResponse.class);
         return ResponseHandler.success(response);
@@ -34,7 +45,7 @@ public class UserProfileController {
     @Operation(summary = "Update user profile with userId")
     @PutMapping("/{userId}")
     public ResponseEntity<ReturnResponse<UserProfileResponse>> updateUserProfile(
-            @PathVariable Long userId, @RequestBody UpdateUserProfileRequest userProfileRequest) {
+            @PathVariable String userId, @RequestBody UpdateUserProfileRequest userProfileRequest) {
         UserProfile updatedProfile =
                 userProfileService.updateUserProfile(userId, userProfileRequest);
         UserProfileResponse response = modelMapper.map(updatedProfile, UserProfileResponse.class);

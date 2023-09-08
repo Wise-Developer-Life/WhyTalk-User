@@ -2,6 +2,7 @@ package com.wisedevlife.whytalkuser.entity;
 
 import com.wisedevlife.whytalkuser.common.enums.SexEnum;
 import jakarta.persistence.*;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,14 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class UserProfile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    private String displayName;
+    @Id private String userId;
 
     @Enumerated(EnumType.STRING)
     private SexEnum sex;
 
-    private String bio;
+    private String displayName;
+
+    private Date birthDay;
 }
