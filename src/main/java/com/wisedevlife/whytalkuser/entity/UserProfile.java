@@ -2,7 +2,7 @@ package com.wisedevlife.whytalkuser.entity;
 
 import com.wisedevlife.whytalkuser.common.enums.SexEnum;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +22,5 @@ public class UserProfile {
 
     private String displayName;
 
-    private Date birthDay;
+    private LocalDate birthDay;
 }
