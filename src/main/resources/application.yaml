@@ -1,42 +1,5 @@
-server:
-    port: 8082
 spring:
-    application:
-        name: whytalk-user
-    datasource:
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5433/user
-        username: root
-        password: admin
-        hikari:
-            connection-timeout: 30000
-            idle-timeout: 600000
-            max-lifetime: 1800000
-            maximum-pool-size: 10
-            minimum-idle: 10
-            connection-init-sql: select 1
-    jpa:
-        properties:
-            hibernate:
-                format_sql: false
-        hibernate:
-            ddl-auto: create-drop
-        show-sql: true
-        database: postgresql
-logging:
-    file:
-        name: ./log/${spring.application.name}.log
-management:
-    server:
-        port: 7001
-        address: localhost
-    endpoints:
-        web:
-            exposure:
-                include: '*'
-springdoc:
-    api-docs:
-        enabled: true
-        path: /api/docs
-    swagger-ui:
-        path: /api/swagger-ui.html
+    profiles:
+        active: ${SPRING_PROFILES_ACTIVE:dev}
+server:
+    port: ${SERVER_START_PORT:8080}
